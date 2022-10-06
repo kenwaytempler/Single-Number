@@ -12,95 +12,82 @@ space: .string " "
 enter: .string "\n"
 .text
 main:
-	la a1, arr1
-	lw a2, size1
-	jal ra, printarray
-	la a0, enter                                   
-    li a7, 4
-    ecall
-	la a0, result1                #load result1 and print                   
-    li a7, 4
-    ecall
-	jal ra, singlenumber
-	li a7, 1
-    ecall
-	la a0, enter                                   
-    li a7, 4
-    ecall
+	la a1, arr1			#load base address of arr1 into a1
+	lw a2, size1			#load size of arr1 into a2
+	jal ra, printarray		#call for print example array function
+	la a0, result1			#print string result1
+   	li a7, 4
+    	ecall
+	jal ra, singlenumber		#call for singlenumber function
+	jal Enter				
 
 
+	la a1, arr2			#load base address of arr2 into a1
+	lw a2, size2			#load size of arr2 into a2
+	jal ra, printarray		#call for print example array function
+	la a0, result2		    	#print string result2              
+    	li a7, 4
+    	ecall
+	jal ra, singlenumber		#call for singlenumber function
+	jal Enter			#print string enter
 
 
+	la a1, arr3			#load base address of arr3 into a1
+	lw a2, size3			#load size of arr3 into a2
+	jal ra, printarray		#call for print example array function
+	la a0, result3          	#print string result3             
+    	li a7, 4
+    	ecall
+	jal ra, singlenumber		#call for singlenumber function
+	jal Enter			#print string enter
 
-	la a1, arr2
-	lw a2, size2
-	jal ra, printarray
-	la a0, enter                                   
-    li a7, 4
-    ecall
-	la a0, result2                #load result2 and print                   
-    li a7, 4
-    ecall
-	jal ra, singlenumber
-	li a7, 1
-    ecall
-	la a0, enter                                   
-    li a7, 4
-    ecall
-
-	la a1, arr3
-	lw a2, size3
-	jal ra, printarray
-	la a0, enter                                   
-    li a7, 4
-    ecall
-	la a0, result3                #load result3 and print                   
-    li a7, 4
-    ecall
-	jal ra, singlenumber
-	li a7, 1
-    ecall
-	la a0, enter                                   
-    li a7, 4
-    ecall
 
 singlenumber:
-	mv t0, x0	#t0 as temporary result 
-	mv t1, x0	#t1 as i of for loop
-	mv t2, a1	#t2 as temporay address and initialize with address of arr1
+	mv t0, x0			#t0 as temporary result 
+	mv t1, x0			#t1 as i of for loop
+	mv t2, a1			#t2 as temporay address and initialize with address of example array
 loop1:
-	beq t1, a2, exit1
-	lw t3, 0(t2)
-	xor t0, t0, t3
-	addi t2, t2, 4
-	addi t1, t1, 1
-	j loop1
+	beq t1, a2, exit1		#if i==size, exit1
+	lw t3, 0(t2)			#load array element into t3
+	xor t0, t0, t3			#xor operation, and save result into t0
+	addi t2, t2, 4			#shift address by 1 word
+	addi t1, t1, 1			#add i by 1
+	j loop1				#jump back to loop1
+
 
 printarray:
-	mv t1, x0
-	mv t2, a1
+	mv t1, x0			#t1 as i of for loop
+	mv t2, a1			#t2 as temporay address and initialize with address of example array
 loop2:
-	beq t1, a2, exit2
-	lw a0, 0(t2)
-	li a7, 1
+	beq t1, a2, exit2		#if i == size, exit2
+	lw a0, 0(t2)			#load array element into a0
+	li a7, 1			#print array element
 	ecall
-	la a0, space
+	la a0, space			#print space
 	li a7, 4
 	ecall
-	addi t2, t2, 4
-	addi t1, t1, 1
-	j loop2
+	addi t2, t2, 4			#shift address by 1 word
+	addi t1, t1, 1			#add i by 1
+	j loop2				#jump back to loop2
+
 
 exit1:
-	mv a0, t0
-	jr ra
+	mv a0, t0			#print result in a0
+	li a7, 1				
+    	ecall
+	jr ra				#jump back to main function
+
 
 exit2:
-	lw a0, enter
+	la a0, enter			#print enter
 	li a7, 4
 	ecall
-	jr ra
+	jr ra				#jump back to main function
 	
 
-
+Enter:
+	la a0, enter            	#print enter                       
+        li a7, 4
+    	ecall
+	jr ra				#jump back to main function
 
