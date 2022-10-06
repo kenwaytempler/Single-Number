@@ -1,7 +1,7 @@
 #include<stdio.h>
 int main() {
     int arr1[] = { 4, 1, 2, 1, 2 };
-    int size1 = sizeof(arr1)/sizeof(int);
+    int size1 = sizeof(arr1) / sizeof(int);
     int res1 = singlenumber(arr1, size1);
     printf("result 1: %d \n", res1);
 
