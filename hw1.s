@@ -30,7 +30,8 @@ main:
     	ecall
 	jal ra, singlenumber		#call for singlenumber function
 	jal Enter			#print string enter
-
+	li a7 10
+    	ecall
 
 	la a1, arr3			#load base address of arr3 into a1
 	lw a2, size3			#load size of arr3 into a2
